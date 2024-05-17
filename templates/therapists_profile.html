@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapist Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://kindmindtherapy.co.uk/wp-content/uploads/2020/08/IMG_7344-2.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background-color: #ffffffb9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            color: #000000;
+            border: 2px solid black;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #88a0de;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 style="color: black;">Therapist Profile</h1>
+        <ul>
+            <li><strong>Name:</strong> {{ user[1] }}</li> <!-- Assuming name is the second column -->
+            <li><strong>Email:</strong> {{ user[2] }}</li> <!-- Assuming email is the third column -->
+            <li><strong>specialties:</strong> {{ user[4] }}</li> <!-- Assuming email is the third column -->
+            
+            <li><strong>credentials:</strong> {{ user[5] }}</li> <!-- Assuming email is the third column -->
+
+            <li><strong>experience:</strong> {{ user[6] }}</li> <!-- Assuming email is the third column -->
+
+            <!-- Add other profile details as needed -->
+            <a href="{{ url_for('edit_admin_profile') }}" class="btn" style="text-decoration: none;border: 1px solid white;padding: 3px;background-color: black;color: #ffffff;">Edit Profile</a>
+
+        </ul>
+    </div>
+</body>
+</html>

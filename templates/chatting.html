@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Panel</title>
+    <style>
+        /* Your CSS styles here */
+        /* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("https://i.ytimg.com/vi/N8tykfpU0TE/maxresdefault.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #9509b1c9;
+    border: 2px solid white;
+    border-radius: 20px;
+    /* margin-top: 100px; */
+}
+.container-1 {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #9509b1c9;
+    border: 2px solid white;
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+/* Chat styles */
+.msg-inbox {
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 400px; /* Adjust as needed */
+    margin-bottom: 20px;
+}
+
+.chat {
+    padding: 10px;
+}
+
+.incoming, .outgoing {
+    margin-bottom: 10px;
+}
+
+.msg-bottom {
+    /* background-color: #f9f9f9; */
+    padding: 10px;
+    /* border: 1px solid #ccc; */
+  /* margin-top: 50px; */
+}
+
+.msg-bottom form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.msg-bottom input[type="text"],
+.msg-bottom input[type="file"],
+.msg-bottom input[type="submit"] {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.msg-bottom input[type="text"],
+.msg-bottom input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.msg-bottom input[type="submit"] {
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Message styles */
+.incoming-msg, .outgoing-msg {
+    display: flex;
+    align-items: flex-start;
+}
+
+.incoming-msg {
+    justify-content: flex-start;
+}
+
+.outgoing-msg {
+    justify-content: flex-end;
+}
+
+.msg-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.time {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #999;
+    font-size: 12px;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    word-wrap: break-word;
+}
+
+.incoming .message-bubble {
+    background-color: #f0f0f0;
+}
+
+.outgoing .message-bubble {
+    background-color: #dcf8c6;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <center><h1 style="color: #ffffff;">Welcome to the Chat Panel</h1></center>
+
+    <div class="container">
+        <div class="msg-inbox">
+            <div class="chat">
+                <div class="msg-page">
+                    <!-- Sort messages by message[4] -->
+                    {% set all_messages = receiver + sender %}
+                    {% set sorted_messages = all_messages|sort(attribute='4') %}
+                    <!-- Render sorted messages -->
+                    {% for message in sorted_messages %}
+                        {% if message in receiver %}
+                            <div class="incoming chats">
+                                <div class="incoming-msg">
+                                    <div class="incoming-chat-msg">
+                                        <span class="time">{{ message[3] }}</span>
+                                        <p>at {{ message[4] }}</p>
+                                        {% if message[5] %}
+                                            <img src="{{ url_for('static', filename=message[5]) }}" alt="" width="20%">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="outgoing chats">
+                                <div class="outgoing-msg">
+                                    <div class="outgoing-chat-msg">
+                                        <span class="time">{{ message[3] }}</span>
+                                        <p>at {{ message[4] }}</p>
+                                        {% if message[5] %}
+                                            <img src="{{ url_for('static', filename=message[5]) }}" alt="" width="20%">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-1">
+        <div class="msg-bottom">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="text" class="form-control mt-3" name="Message" placeholder="Write a message" required/>
+                <input type="file" name="file">
+                <input type="submit" value="Send" class="button-52">
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

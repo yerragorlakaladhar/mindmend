@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url('https://practicetechsolutions.com/wp-content/uploads/2020/02/cropped-1536x1242.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* display: flex;
+            justify-content: center;
+            align-items: center; */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #0c5982; 
+        }
+
+        /* .therapist-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+        } */
+
+        .card {
+            width: 60%;
+            border: 2px solid #ff0c0c;
+            color: #ffffff;
+            /* width: calc(33.33% - 20px);  */
+            /* Divide the width by 3 and subtract the margin */
+            background-color: #000000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 20px;
+            /* transition: transform 0.3s ease; */
+            cursor: pointer;
+            box-sizing: border-box; /* Ensure padding doesn't add to the width */
+        }
+
+        /* .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        } */
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #3794ce;
+        }
+
+        .card p {
+            margin: 5px 0;
+            /* color: #666; */
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%;height: fit-content; background-color: #fefefec4;border: 2px solid black;border-radius: 20px;margin-top: 10%;">
+    <center><h1 style="color: #000000;text-transform: uppercase;">Search Results</h1></center>
+    <div class="therapist-details">
+        {% for therapist in therapists %}
+           <center> <div class="card">
+                <h3>{{ therapist[1] }}</h3>
+                <p>Email: {{ therapist[2] }}</p>
+                <p>Specialties: {{ therapist[4] }}</p>
+                <p>Credentials: {{ therapist[5] }}</p>
+                <p>Experience: {{ therapist[6] }}</p>
+                <!-- Add more HTML structure as needed -->
+            </div></center>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

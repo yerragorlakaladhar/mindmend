@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therapist Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpapercave.com/wp/wp2469683.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: rgba(0, 0, 0, 0.8); /* Add transparency to the form background */
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;
+            color: #ffffff;
+            margin-top: 10%;
+        }
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+        }
+        label {
+            display: inline-block;
+            width: 130px; /* Set a fixed width for labels to align them */
+         /* Align the text of labels to the right */
+            /* Add some right margin for spacing between label and input */
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: 100%; /* Calculate the width of input fields */
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Ensure padding doesn't add to the width */
+        }
+
+        input[type="submit"] {
+            width: 60%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    </style>      
+</head>
+<body>
+    <form action="{{url_for('therapists_registration')}}" method="post">
+        <h2>Therapist Registration Form</h2><br><br>
+        <center><label for="name">Name:</label></center>
+        <input type="text" id="name" name="username" required><br>
+
+        <center><label for="email">Email:</label></center>
+        <input type="email" id="email" name="email" required><br>
+
+        <center><label for="password">Password:</label></center>
+        <input type="password" id="password" name="password" required><br>
+
+        <center><label for="specialties">Specialties:</label></center>
+        <textarea id="specialties" name="specialties" rows="4" cols="50"></textarea><br>
+
+        <center><label for="credentials">Credentials:</label></center>
+        <textarea id="credentials" name="credentials" rows="4" cols="50"></textarea><br>
+
+        <center><label for="experience">Experience:</label></center>
+        <textarea id="experience" name="experience" rows="4" cols="50"></textarea><br>
+
+        <center><input type="submit" value="Submit"></center>
+    </form>
+</body>
+</html>
