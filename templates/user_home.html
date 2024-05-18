@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar with Profile Button</title>
+    <title>User Panel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-image: url('https://wallpaperaccess.com/full/740229.jpg');
             margin: 0;
             padding: 0;
+
         }
         .navbar {
             background-color: #333;
@@ -51,115 +52,84 @@
         .search-form button:hover {
             background-color: #4f3535;
         }
+        .user-appointments {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .user-appointment-card {
+            width: calc(30% - 20px);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .user-appointment-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .user-appointment-card h3 {
+            color: #333;
+            margin-top: 0;
+            text-align: center;
+        }
+        .user-appointment-card p {
+            color: #666;
+            margin-bottom: 10px;
+        }
         .therapist-details {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
         }
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 30%; /* Adjust as needed */
+        .therapist-card {
+            width: calc(30% - 20px);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
             margin-bottom: 20px;
-            background-color: #e2d0d0;
-            border-radius: 5px;
-            padding: 20px;
         }
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        .therapist-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
-        .card h3 {
+        .therapist-card h3 {
+            color: #333;
+            margin-top: 0;
             text-align: center;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        .therapist-card p {
+            color: #666;
+            margin-bottom: 10px;
         }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            z-index: 1;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-radius: 5px;
-        }
-        .dropdown-content button {
+        .dropdown select {
             width: 100%;
             padding: 10px;
-            text-align: left;
-            border: none;
-            background-color: transparent;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
             cursor: pointer;
         }
-        .dropdown-content button:hover {
-            background-color: #ddd;
+        .dropdown select:focus {
+            outline: none;
         }
-        .dropdown:hover .dropdown-content {
-            display: block;
+        .dropdown button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #3e0b12;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        .h3{
-            margin-top: 0;
-            color: #995f33;
+        .dropdown button:hover {
+            background-color: #4f3535;
         }
-        .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    width: calc(30% - 40px); /* Adjust as needed */
-    margin: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.card h3 {
-    text-align: center;
-    color: #333;
-    margin-top: 0;
-}
-
-.card p {
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.card form {
-    margin-top: 20px;
-}
-
-.dropdown select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    cursor: pointer;
-}
-
-.dropdown select:focus {
-    outline: none;
-}
-
-.dropdown button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #3e0b12;
-    color: #fff;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.dropdown button:hover {
-    background-color: #4f3535;
-}
-
     </style>
 </head>
 <body>
@@ -174,10 +144,35 @@
     </form>
 </div>
 
-<!-- Therapist details -->
+<!-- User's Appointments -->
+<div class="user-appointments">
+    <h2>Your Appointments</h2>
+    {% for appointment in appointment_data %}
+        <div class="user-appointment-card">
+            <h3>{{ appointment[2] }}</h3>
+            <p><strong>Start Time:</strong> {{ appointment[3] }}</p>
+            <p><strong>Status:</strong> {{ appointment[4] }}</p>
+            {% for therapist in therapists %}
+                {% if appointment[4] == 'scheduled' and appointment[2] == therapist[0] %}
+                    <form action="{{ url_for('cancel_appointment', appointment_id=appointment[0]) }}">
+                        <button type="submit">Cancel Appointment</button>
+                    </form>
+                {% endif %}
+                {% if appointment[4] == 'completed' and appointment[2] == therapist[0] %}
+                    <form action="{{ url_for('make_payment', appointment_id=appointment[0]) }}">
+                        <button type="submit">payment</button>
+                    </form>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Therapist Details -->
 <div class="therapist-details">
+    <h2>Therapists</h2>
     {% for therapist in therapists %}
-        <div class="card">
+        <div class="therapist-card">
             <h3>{{ therapist[1] }}</h3>
             <p>Email: {{ therapist[2] }}</p>
             <p>Specialties: {{ therapist[4] }}</p>
@@ -189,22 +184,11 @@
                         <option value="9:00 AM">9:00 AM</option>
                         <option value="10:00 AM">10:00 AM</option>
                         <option value="11:00 AM">11:00 AM</option>
-                        <!-- Add more time options as needed -->
                     </select>
                     <button type="submit">Book Appointment</button>
                 </div>
             </form>
-            {% if appointment_data and appointment_data[0][2]== therapist[0] %}
-            <form  action="{{ url_for('cancel_appointment', appointment_id=appointment_data[0][0]) }}">
-                <button type="submit">Cancel Appointment</button>
-            </form>
- <br>
-            {% if appointment_data[0][4]=='completed' and appointment_data[0][2]== therapist[0] %}
-        <a href="{{url_for('make_payment')}}"><button>Payment</button></a>
-        {% endif %}
-        {% endif %}
-        <a href="{{url_for('store_message',therapist_id=therapist[0])}}"><p><button>Chat with therapist</button></p></a>
-        
+            <a href="{{url_for('store_message',therapist_id=therapist[0])}}"><p><button>Chat with therapist</button></p></a>
         </div>
     {% endfor %}
 </div>
